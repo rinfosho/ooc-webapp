@@ -24,8 +24,10 @@ public class DatabaseService {
 
     public void deleteDB(String uid){
         try {
-            PreparedStatement preS = this.conn.prepareStatement("delete from User_Database.User_data where Username = '" + uid + "'  ");
-            preS.executeUpdate();
+            PreparedStatement preparedStatement = this.conn.prepareStatement(
+                    "DELETE FROM User_Database.User_data WHERE Username = ?");
+            preparedStatement.setString(1, uid);
+            preparedStatement.executeUpdate();
 
         }catch (SQLException s){
             s.printStackTrace();
@@ -34,9 +36,9 @@ public class DatabaseService {
         }
     }
 
-    public void updateDB(String uid, String usr, String fname){
+    public void updateDB(String usr, String fname){
         try {
-            PreparedStatement preS = this.conn.prepareStatement("update User_Database.User_data SET Username = ?, UserID = ? where ID = '" + uid + "'  ");
+            PreparedStatement preS = this.conn.prepareStatement("UPDATE User_Database.User_data SET Username = ?, FirstName = ? WHERE Username = '" + usr + "'  ");
             preS.setString(1,usr);
             preS.setString(2,fname);
             preS.executeUpdate();
@@ -50,7 +52,7 @@ public class DatabaseService {
 
     public void insertDB(String usr, String pwd, String fname){
         try {
-            PreparedStatement preS = this.conn.prepareStatement("insert into User_Database.User_data (Username,Password, FirstName) values (?,?,?);");
+            PreparedStatement preS = this.conn.prepareStatement("INSERT INTO User_Database.User_data (Username,Password, FirstName) VALUES (?,?,?);");
             preS.setString(1, usr);
             preS.setString(2,pwd);
             preS.setString(3,fname);
@@ -68,7 +70,7 @@ public class DatabaseService {
         Map<String, String> temp = new HashMap<>();
 
         try {
-            PreparedStatement preS = this.conn.prepareStatement("select * from User_Database.User_data;");
+            PreparedStatement preS = this.conn.prepareStatement("SELECT * FROM User_Database.User_data;");
             ResultSet result = preS.executeQuery();
 
             while (result.next()){

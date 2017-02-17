@@ -29,9 +29,15 @@
     <tr>
         <td><%=rsltst.getString("FirstName") %></td>
         <td><%=rsltst.getString("Username") %></td>
-        <form action = "/delete" method = "get">
+        <% String hello = rsltst.getString("Username");%>
         <%--<td><input type="button" value="Edit"></td>--%>
-            <td><input type="button" value="Delete"></td>
+        <form action = '/delete' method="get">
+            <td><input type="submit" value="Delete"></td>
+            <td><input type="hidden" name= "todelete" value="<%=hello%>>"></td>
+        </form>
+        <form action = '/edit' method="get">
+            <td><input type="submit" value="Edit"></td>
+            <td><input type="hidden" name= "toedit" value="<%=hello%>>"></td>
         </form>
 
 
@@ -41,6 +47,15 @@
         rsltst.close();
     %>
 </table>
+<form action="/signup" method="get">
+    <input type="submit" value="Add user">
+</form>
+
+<form action="/login" method="get">
+    <input type="submit" value="logout">
+</form>
+
+
 
 </body>
 </html>

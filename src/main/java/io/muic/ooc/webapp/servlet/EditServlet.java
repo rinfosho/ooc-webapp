@@ -7,6 +7,7 @@ package io.muic.ooc.webapp.servlet;
 
 import io.muic.ooc.webapp.service.DatabaseService;
 import io.muic.ooc.webapp.service.SecurityService;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,14 +20,14 @@ import java.io.IOException;
  *
  * @author gigadot
  */
-public class DeleteServlet extends HttpServlet {
+public class EditServlet extends HttpServlet {
     DatabaseService db = new DatabaseService();
 
     private SecurityService securityService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/delete.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/edit.jsp");
         rd.include(request, response);
     }
 
@@ -34,9 +35,20 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // do login post logic
         // extract username and password from request
-        String username = request.getParameter("todelete");
-        System.out.println(username);
-        db.deleteDB(username);
+        String username = request.getParameter("username");
+        String firstname = request.getParameter("firstname");
+        if (!StringUtils.isBlank(username)&&!StringUtils.isBlank(firstname)){
+            db.updateDB(username,firstname);
+        }
+        else{
+            String error = "Please do not leave any blanks. If you want username/firstname to remain the same, please " +
+                    "enter the old username/firstname";
+            request.setAttribute("error", error);
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/edit.jsp");
+            rd.include(request, response);
+        }
+
+
 
         // check username and password against database
         // if valid then set username attribute to session via securityService

@@ -6,10 +6,7 @@
 package io.muic.ooc.webapp;
 
 import io.muic.ooc.webapp.service.SecurityService;
-import io.muic.ooc.webapp.servlet.DeleteServlet;
-import io.muic.ooc.webapp.servlet.HomeServlet;
-import io.muic.ooc.webapp.servlet.LoginServlet;
-import io.muic.ooc.webapp.servlet.RegisterServlet;
+import io.muic.ooc.webapp.servlet.*;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
@@ -30,6 +27,7 @@ public class ServletRouter {
         initLogin(ctx);
         initRegister(ctx);
         initDelete(ctx);
+        initEdit(ctx);
     }
 
     private void initHome(Context ctx) {
@@ -56,5 +54,11 @@ public class ServletRouter {
         deleteServlet.setSecurityService(securityService);
         Tomcat.addServlet(ctx, "DeleteServlet", deleteServlet);
         ctx.addServletMapping("/delete", "DeleteServlet");
+    }
+    private void initEdit(Context ctx){
+        EditServlet editServlet = new EditServlet();
+        editServlet.setSecurityService(securityService);
+        Tomcat.addServlet(ctx, "EditServlet", editServlet);
+        ctx.addServletMapping("/edit", "EditServlet");
     }
 }

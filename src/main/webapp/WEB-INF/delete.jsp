@@ -1,14 +1,13 @@
 <html>
 <body>
-<h2>Delete User Confirmation</h2>
-<p>Are you sure you want to delete/remove the user</p>
-<form action="/" method="post">
+<h2>Are you sure?</h2>
+<form action="/login" method="post">
     <br>
-    <input type="submit" value="Cancel">
+    <input type="submit" value="Yes">
 </form>
-<form action="/delete" method="post">
+<form action="/" method="get">
     <br>
-    <input type="submit" value="Confirm">
+    <input type="submit" value="No">
 </form>
 </body>
 </html>
